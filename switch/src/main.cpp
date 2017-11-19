@@ -7,6 +7,9 @@
 
 #include "tgesp.h"
 #include <TickerScheduler.h>
+#define TG_VERSION 5
+
+#define STA_WIFI_ATTEMPT 1
 
 tgesp esp;
 
@@ -72,15 +75,29 @@ void setup()
 {
   Serial.begin(115200);
   WiFi.hostname("train_switch");
+  WiFi.mode(WIFI_AP_STA);
   WiFi.softAPConfig(local_IP, gateway, subnet);
 	String ssid_temp = ssid_ap + String(esp.cmds.get_id());
 
   WiFi.softAP(ssid_temp.c_str(),password_ap);
   delay(1000);
 
-  //WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid_c, password_c);
-  WiFi.waitForConnectResult() ;
+
+	WiFi.begin(ssid_c, password_c);
+	uint8_t attempt = 0;
+	while (WiFi.waitForConnectResult() != WL_CONNECTED) {
+		Serial.println("Connection to STA Failed!");
+		attempt++;
+		delay(5000);
+		if (attempt >= STA_WIFI_ATTEMPT)
+		{
+			WiFi.mode(WIFI_AP);
+			break;
+			//WiFi.softAP(ssid_ap,password_ap);
+		}
+
+	}
+
 
   // Port defaults to 8266
   // ArduinoOTA.setPort(8266);
@@ -120,7 +137,7 @@ void setup()
   });
   ArduinoOTA.begin();
   esp.setup();
-	ts.add(3,60,listen_for_clients);
+	//ts.add(3,60,listen_for_clients);
   ts.add(0, 200, check_OTA);
   ts.add(1,1000,print_info);
   ts.add(2,100,app);

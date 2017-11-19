@@ -7,6 +7,9 @@
 
 #include <TickerScheduler.h>
 
+#define TG_VERSION 6
+
+#define STA_WIFI_ATTEMPT 1
 
 TickerScheduler ts(4);
 
@@ -29,7 +32,7 @@ static char ssid_st_h[] = "TeliaGateway9C-97-26-49-11-55";
 static char password_st_h[] = "179A1021DD";
 
 // Södertälje wifi
-static char ssid_st_s[] = "TP-LINK_28D578";
+static char ssid_st_s[] = "TP-LINK_D578";
 static char password_st_s[] = "50044801";
 
 // hack wifi
@@ -71,7 +74,7 @@ void send_info_to_clients()
   {
     IPaddress = &stat_info->ip;
     address = IPaddress->addr;
-    if (client.connect(address, 80)) {
+    if (client.connect(address, 7890)) {
       Serial.print("connected to ");Serial.println(address);
       // Make a HTTP request:
       client.println("GET /controll?"+String(msg)+" HTTP/1.0");
@@ -91,9 +94,14 @@ void check_OTA()
 
 void print_info()
 {
+  WiFiMode_t wm = WiFi.getMode();
   t_g++;
-  Serial.print("R ");Serial.print(t_g);Serial.print(" IP: ");
-  Serial.println(WiFi.localIP());
+  Serial.print("R ");Serial.print(t_g);
+  Serial.print(" M:");Serial.print(wm);
+  Serial.print(" IP: ");
+  if (wm==WIFI_AP) Serial.print(WiFi.softAPIP());
+  else Serial.print(WiFi.localIP());
+  Serial.print(" v:");Serial.println(TG_VERSION);
 }
 
 void app()
@@ -112,18 +120,28 @@ void app()
 void setup()
 {
   Serial.begin(115200);
+  Serial.println("Train switcher wifi controller setup");
+
+  WiFi.mode(WIFI_AP_STA);
   WiFi.hostname("train_switcher");
   WiFi.softAPConfig(local_IP, gateway, subnet);
   WiFi.softAP(ssid_ap,password_ap);
   delay(1000);
   //WiFi.begin(ssid_st_s, password_st_s);
 
-  //WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid_x, password_x);
+  WiFi.begin(ssid_st_s, password_st_s);
+  uint8_t attempt = 0;
   while (WiFi.waitForConnectResult() != WL_CONNECTED) {
-    Serial.println("Connection Failed! Rebooting...");
+    Serial.println("Connection to STA Failed!");
+    attempt++;
     delay(5000);
-    ESP.restart();
+    if (attempt >= STA_WIFI_ATTEMPT)
+    {
+      WiFi.mode(WIFI_AP);
+      break;
+      //WiFi.softAP(ssid_ap,password_ap);
+    }
+    //ESP.restart();
   }
 
   // Port defaults to 8266
