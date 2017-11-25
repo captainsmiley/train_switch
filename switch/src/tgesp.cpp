@@ -134,16 +134,18 @@ void tgesp::handle_command(const char * input)
     output("handling command: "); output(input); output("\n");
 
        const char * parameter;
-       if (cmp_input(input,"http_get")) {
-           if (serial_dbg) Serial.println("Runs http_get()"); cmds.http_get();}
+
        if (cmp_input(input,"read_client")) {
            if (serial_dbg) Serial.println("Runs read_client()"); cmds.read_client();}
-       if (cmp_input(input,"read_distance")) {
-           if (serial_dbg) Serial.println("Runs read_distance()"); cmds.read_distance();}
        if (cmp_input(input,"servo_h")) {
            if (serial_dbg) Serial.println("Runs servo_h()"); cmds.servo_h();}
        if (cmp_input(input,"servo_l")) {
            if (serial_dbg) Serial.println("Runs servo_l()"); cmds.servo_l();}
+      if (cmp_input(input,"get_id"))
+      {
+          if (serial_dbg) Serial.println("Runs get_id()"); output(String(cmds.get_id()).c_str());
+      }
+      
        if ((parameter = cmp_input(input,"test_gpio")))
        {
        if (serial_dbg) Serial.print("Runs test_gpio("); if (serial_dbg) Serial.print(parameter); Serial.print(")\n");
@@ -194,6 +196,7 @@ void tgesp::handle_command(const char * input)
        {
     	   cmds.wifi_setup(parameter);
        }
+
 }
 
 void tgesp::output(const char * out_put)

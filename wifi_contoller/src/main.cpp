@@ -74,14 +74,26 @@ void send_info_to_clients()
   {
     IPaddress = &stat_info->ip;
     address = IPaddress->addr;
-    if (client.connect(address, 7890)) {
+    client.setNoDelay(true);
+    client.setTimeout(1);
+    Serial.print("Send to: ");Serial.println(address);
+    if (client.connect(address, 80)) {
+
       Serial.print("connected to ");Serial.println(address);
       // Make a HTTP request:
       client.println("GET /controll?"+String(msg)+" HTTP/1.0");
+      Serial.print("1");
       client.println();
+      Serial.print("2");
+      client.flush();
+      Serial.print("3");
     }
-    else Serial.println("Faild to send info to " +String(address)  );
+    else
+    {
+      Serial.print("Faild to send info to ");Serial.println(address);
+    }
     client.stop();
+    Serial.print("4");
     stat_info = STAILQ_NEXT(stat_info, next);
   }
 

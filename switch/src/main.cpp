@@ -7,7 +7,7 @@
 
 #include "tgesp.h"
 #include <TickerScheduler.h>
-#define TG_VERSION 5
+#define TG_VERSION 6
 
 #define STA_WIFI_ATTEMPT 1
 
@@ -137,7 +137,7 @@ void setup()
   });
   ArduinoOTA.begin();
   esp.setup();
-	//ts.add(3,60,listen_for_clients);
+	ts.add(3,60,listen_for_clients);
   ts.add(0, 200, check_OTA);
   ts.add(1,1000,print_info);
   ts.add(2,100,app);
