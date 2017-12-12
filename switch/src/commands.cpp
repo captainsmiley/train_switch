@@ -177,8 +177,25 @@ void Commands::set_servo_l_pos(const char *p)
 void Commands::set_id(const char *p)
 {
     String p_s(p);
-    EEPROM.write(ID_ADDR,uint8_t(p_s.toInt()));
+    uint8_t n = p_s.toInt();
+    Serial.print("Setting id: ");Serial.println(n);
+    EEPROM.write(ID_ADDR,n);
     EEPROM.commit();
+}
+void Commands::controll(const char *p)
+{
+    String p_s(p);
+    uint16_t n = p_s.toInt();
+    Serial.print("Get ctr: ");Serial.println(n);
+
+    if ( n & (1 << get_id()) )
+    {
+      Serial.print("this one");
+      servo_h();
+    } else
+    {
+      servo_l();
+    }
 }
 uint8_t Commands::get_id()
 {

@@ -145,7 +145,7 @@ void tgesp::handle_command(const char * input)
       {
           if (serial_dbg) Serial.println("Runs get_id()"); output(String(cmds.get_id()).c_str());
       }
-      
+
        if ((parameter = cmp_input(input,"test_gpio")))
        {
        if (serial_dbg) Serial.print("Runs test_gpio("); if (serial_dbg) Serial.print(parameter); Serial.print(")\n");
@@ -196,6 +196,17 @@ void tgesp::handle_command(const char * input)
        {
     	   cmds.wifi_setup(parameter);
        }
+       if ((parameter = cmp_input(input,"controll")))
+       {
+         if (serial_dbg) Serial.print("Runs controll("); if (serial_dbg) Serial.print(parameter); Serial.print(")\n");
+         cmds.controll(parameter);
+       }
+       if ((parameter = cmp_input(input,"set_id")))
+       {
+           if (serial_dbg) Serial.print("Runs set_id("); if (serial_dbg) Serial.print(parameter); Serial.print(")\n");
+           cmds.set_id(parameter);
+       }
+
 
 }
 

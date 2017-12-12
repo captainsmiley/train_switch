@@ -73,6 +73,6 @@ void loop() {
 
   if (Serial1.available())
   {
-    Serial.print(Serial.read());
+    //Serial.print(Serial.read());
   }
 }

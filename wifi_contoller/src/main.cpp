@@ -7,7 +7,7 @@
 
 #include <TickerScheduler.h>
 
-#define TG_VERSION 6
+#define TG_VERSION 7
 
 #define STA_WIFI_ATTEMPT 1
 
@@ -66,6 +66,22 @@ void find_clients()
 }
 // Initialize the client library
 WiFiClient client;
+
+IPAddress baned_clients[10] = {};
+uint8_t banned_count = 0;
+
+bool in_banned_list(IPAddress & a)
+{
+  for (int i=0;i<10;i++)
+  {
+    if(a == baned_clients[i])
+    {
+      return true;
+    }
+  }
+  return false;
+}
+
 void send_info_to_clients()
 {
   Serial.println("Starting to send info to clinets");
@@ -74,24 +90,28 @@ void send_info_to_clients()
   {
     IPaddress = &stat_info->ip;
     address = IPaddress->addr;
+
     client.setNoDelay(true);
     client.setTimeout(1);
     Serial.print("Send to: ");Serial.println(address);
+    if (!in_banned_list(address))
+    {
     if (client.connect(address, 80)) {
 
       Serial.print("connected to ");Serial.println(address);
       // Make a HTTP request:
       client.println("GET /controll?"+String(msg)+" HTTP/1.0");
-      Serial.print("1");
       client.println();
-      Serial.print("2");
       client.flush();
-      Serial.print("3");
     }
     else
     {
       Serial.print("Faild to send info to ");Serial.println(address);
+      baned_clients[banned_count] = address;
+      banned_count++;
+      if (banned_count >= 10) banned_count = 0;
     }
+  }
     client.stop();
     Serial.print("4");
     stat_info = STAILQ_NEXT(stat_info, next);
@@ -141,7 +161,7 @@ void setup()
   delay(1000);
   //WiFi.begin(ssid_st_s, password_st_s);
 
-  WiFi.begin(ssid_st_s, password_st_s);
+  WiFi.begin(ssid_x, password_x);
   uint8_t attempt = 0;
   while (WiFi.waitForConnectResult() != WL_CONNECTED) {
     Serial.println("Connection to STA Failed!");

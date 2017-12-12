@@ -37,6 +37,7 @@ public:
     void wifi_setup(const char *p);
     void connect(const char *p);
     void set_id(const char *p);
+    void controll(const char *p);
     uint8_t get_id();
 	virtual ~Commands();
 
