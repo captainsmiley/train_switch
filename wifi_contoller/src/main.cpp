@@ -111,6 +111,9 @@ void send_info_to_clients()
       banned_count++;
       if (banned_count >= 10) banned_count = 0;
     }
+  }else
+  {
+    Serial.println("Ip banned");
   }
     client.stop();
     Serial.print("4");

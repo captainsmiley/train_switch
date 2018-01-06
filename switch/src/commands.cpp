@@ -1,9 +1,9 @@
 
 
-#include "commands.h"
+#include "com/commands.h"
 #include <Servo.h>
 #include <WiFiUdp.h>
-#include "tgesp.h"
+#include "com/tgesp.h"
 
 #define SERVO_H_POS_ADDR 0x00
 #define SERVO_L_POS_ADDR 0x01
