@@ -4,6 +4,7 @@
 #include <ESP8266mDNS.h>
 #include <WiFiUdp.h>
 #include <ArduinoOTA.h>
+#include "OTA.h"
 
 #include <TickerScheduler.h>
 
@@ -20,10 +21,11 @@ const char* password = "68E84C8ED7";
 
 int loop_counter = 0;
 
-IPAddress local_IP(192,168,4,22);
-IPAddress gateway(192,168,4,9);
+IPAddress local_IP(192,168,7,22);
+IPAddress gateway(192,168,7,22);
 IPAddress subnet(255,255,255,0);
 
+OTA ota;
 // AP wifi
 static char ssid_ap[] = "ESPWiFi_TrainController";
 static char password_ap[] = "connectme";
@@ -92,7 +94,7 @@ void send_info_to_clients()
     address = IPaddress->addr;
 
     client.setNoDelay(true);
-    client.setTimeout(1);
+    client.setTimeout(110);
     Serial.print("Send to: ");Serial.println(address);
     if (!in_banned_list(address))
     {
@@ -107,13 +109,12 @@ void send_info_to_clients()
     else
     {
       Serial.print("Faild to send info to ");Serial.println(address);
-      baned_clients[banned_count] = address;
-      banned_count++;
-      if (banned_count >= 10) banned_count = 0;
+  //    baned_clients[banned_count] = address;
+   //   banned_count++;
+    //  if (banned_count >= 10) banned_count = 0;
     }
   }
     client.stop();
-    Serial.print("4");
     stat_info = STAILQ_NEXT(stat_info, next);
   }
 
@@ -121,7 +122,7 @@ void send_info_to_clients()
 
 void check_OTA()
 {
-  ArduinoOTA.handle();
+  ota.update();
 }
 
 void print_info()
@@ -149,32 +150,34 @@ void app()
   }
 }
 
+
 void setup()
 {
   Serial.begin(115200);
   Serial.println("Train switcher wifi controller setup");
 
-  WiFi.mode(WIFI_AP_STA);
+  //WiFi.mode(WIFI_AP_STA);
+  WiFi.mode(WIFI_AP);
   WiFi.hostname("train_switcher");
   WiFi.softAPConfig(local_IP, gateway, subnet);
   WiFi.softAP(ssid_ap,password_ap);
   delay(1000);
   //WiFi.begin(ssid_st_s, password_st_s);
 
-  WiFi.begin(ssid_x, password_x);
+//  WiFi.begin(ssid_x, password_x);
   uint8_t attempt = 0;
-  while (WiFi.waitForConnectResult() != WL_CONNECTED) {
-    Serial.println("Connection to STA Failed!");
-    attempt++;
-    delay(5000);
-    if (attempt >= STA_WIFI_ATTEMPT)
-    {
-      WiFi.mode(WIFI_AP);
-      break;
+  //while (WiFi.waitForConnectResult() != WL_CONNECTED) {
+    //Serial.println("Connection to STA Failed!");
+    //attempt++;
+    //delay(5000);
+    //if (attempt >= STA_WIFI_ATTEMPT)
+    //{
+    //  WiFi.mode(WIFI_AP);
+     // break;
       //WiFi.softAP(ssid_ap,password_ap);
-    }
+    //}
     //ESP.restart();
-  }
+  //}
 
   // Port defaults to 8266
   // ArduinoOTA.setPort(8266);
@@ -189,31 +192,9 @@ void setup()
   // MD5(admin) = 21232f297a57a5a743894a0e4a801fc3
   // ArduinoOTA.setPasswordHash("21232f297a57a5a743894a0e4a801fc3");
 
-  ArduinoOTA.onStart([]() {
-    String type;
-    if (ArduinoOTA.getCommand() == U_FLASH)
-      type = "sketch";
-    else // U_SPIFFS
-      type = "filesystem";
-    // NOTE: if updating SPIFFS this would be the place to unmount SPIFFS using SPIFFS.end()
-    Serial.println("Start updating " + type);
-  });
-  ArduinoOTA.onEnd([]() {
-    Serial.println("\nEnd");
-  });
-  ArduinoOTA.onProgress([](unsigned int progress, unsigned int total) {
-    Serial.printf("Progress: %u%%\r", (progress / (total / 100)));
-  });
-  ArduinoOTA.onError([](ota_error_t error) {
-    Serial.printf("Error[%u]: ", error);
-    if (error == OTA_AUTH_ERROR) Serial.println("Auth Failed");
-    else if (error == OTA_BEGIN_ERROR) Serial.println("Begin Failed");
-    else if (error == OTA_CONNECT_ERROR) Serial.println("Connect Failed");
-    else if (error == OTA_RECEIVE_ERROR) Serial.println("Receive Failed");
-    else if (error == OTA_END_ERROR) Serial.println("End Failed");
-  });
-  ArduinoOTA.begin();
-  ts.add(0, 200, check_OTA);
+  ota.setup();
+  delay(1000);
+  ts.add(0, 100, check_OTA);
   ts.add(1,1000,print_info);
   ts.add(2,100,app);
   //ts.add(3,5000,find_clients);
