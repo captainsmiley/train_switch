@@ -41,7 +41,8 @@ static char password_st_s[] = "50044801";
 const char* ssid_x = "TN_24GHz_C587A5";
 const char* password_x = "68E84C8ED7";
 
-char msg = '\0';
+String msg = "";
+
 uint8_t pos = 0;
 
 
@@ -86,6 +87,10 @@ bool in_banned_list(IPAddress & a)
 
 void send_info_to_clients()
 {
+  if(msg == "")
+  {
+    return;
+  }
   Serial.println("Starting to send info to clinets");
   stat_info = wifi_softap_get_station_info();
   while (stat_info != NULL)
@@ -144,12 +149,16 @@ void app()
 {
   if (Serial.available() > 0) {
     char c = Serial.read();
-    if(c=='#' && msg != '\0')
+    if(c=='#')
     {
        Serial.println(msg);
        send_info_to_clients();
+       msg = "";
     }
-    else msg = c;
+    else
+    {
+      msg += c;
+    }
   }
 }
 
