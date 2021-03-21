@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name ESP8266-12E_ESP-12E)(type Legacy)(uri ${KIPRJMOD}/lib/ESP8266-12E_ESP-12E/ESP8266-12E_ESP-12E.lib)(options "")(descr ""))
+  (lib (name JLCPCB_R)(type Legacy)(uri ${KIPRJMOD}/lib/JLCPCB_parts/JLCPCB_R.lib)(options "")(descr ""))
+)
