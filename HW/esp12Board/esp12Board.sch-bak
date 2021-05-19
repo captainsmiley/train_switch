@@ -1502,7 +1502,7 @@ $EndComp
 Text GLabel 1300 3850 1    50   Input ~ 0
 nRST
 Text GLabel 1300 4900 3    50   Input ~ 0
-GPIO0
+IO0
 Wire Wire Line
 	1300 4250 1900 4250
 Wire Wire Line
@@ -1610,7 +1610,7 @@ $EndComp
 Text GLabel 3300 4950 1    50   Input ~ 0
 nRST
 Text GLabel 2800 4950 1    50   Input ~ 0
-GPIO0
+IO0
 $Comp
 L Device:R_Small R7
 U 1 1 5FF09F68
