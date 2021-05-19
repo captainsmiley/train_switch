@@ -1452,30 +1452,6 @@ Connection ~ 1950 1800
 Wire Wire Line
 	1950 1800 1650 1800
 $Comp
-L Transistor_BJT:S8050 Q1
-U 1 1 5FEC3B79
-P 1400 4050
-F 0 "Q1" H 1590 4096 50  0000 L CNN
-F 1 "S8050" H 1590 4005 50  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 1600 3975 50  0001 L CIN
-F 3 "http://www.unisonic.com.tw/datasheet/S8050.pdf" H 1400 4050 50  0001 L CNN
-F 4 "C2146" H 1400 4050 50  0001 C CNN "LCSC"
-	1    1400 4050
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Transistor_BJT:S8050 Q2
-U 1 1 5FEC4B5D
-P 1400 4700
-F 0 "Q2" H 1590 4746 50  0000 L CNN
-F 1 "S8050" H 1590 4655 50  0000 L CNN
-F 2 "Package_TO_SOT_SMD:SOT-23" H 1600 4625 50  0001 L CIN
-F 3 "http://www.unisonic.com.tw/datasheet/S8050.pdf" H 1400 4700 50  0001 L CNN
-F 4 "C2146" H 1400 4700 50  0001 C CNN "LCSC"
-	1    1400 4700
-	-1   0    0    1   
-$EndComp
-$Comp
 L Device:R_Small R5
 U 1 1 5FEC7826
 P 1700 4050
@@ -1609,31 +1585,6 @@ F 3 "~" H 3300 5700 50  0001 C CNN
 $EndComp
 Text GLabel 3300 4950 1    50   Input ~ 0
 nRST
-Text GLabel 2800 4950 1    50   Input ~ 0
-IO0
-$Comp
-L Device:R_Small R7
-U 1 1 5FF09F68
-P 2800 5150
-F 0 "R7" H 2859 5196 50  0000 L CNN
-F 1 "470" H 2859 5105 50  0000 L CNN
-F 2 "Resistor_SMD:R_0805_2012Metric_Pad1.15x1.40mm_HandSolder" H 2800 5150 50  0001 C CNN
-F 3 "~" H 2800 5150 50  0001 C CNN
-F 4 "C17710" H 2800 5150 50  0001 C CNN "LCSC"
-	1    2800 5150
-	1    0    0    -1  
-$EndComp
-$Comp
-L Switch:SW_Push SW1
-U 1 1 5FF0A11F
-P 2800 5500
-F 0 "SW1" V 2754 5648 50  0000 L CNN
-F 1 "SW_Push" V 2845 5648 50  0000 L CNN
-F 2 "Button_Switch_THT:SW_PUSH_6mm" H 2800 5700 50  0001 C CNN
-F 3 "~" H 2800 5700 50  0001 C CNN
-	1    2800 5500
-	0    1    1    0   
-$EndComp
 $Comp
 L power:GND #PWR0118
 U 1 1 5FF0A473
@@ -1645,23 +1596,6 @@ F 3 "" H 3300 5800 50  0001 C CNN
 	1    3300 5800
 	1    0    0    -1  
 $EndComp
-$Comp
-L power:GND #PWR0119
-U 1 1 5FF0A72E
-P 2800 5800
-F 0 "#PWR0119" H 2800 5550 50  0001 C CNN
-F 1 "GND" H 2805 5627 50  0000 C CNN
-F 2 "" H 2800 5800 50  0001 C CNN
-F 3 "" H 2800 5800 50  0001 C CNN
-	1    2800 5800
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2800 5800 2800 5700
-Wire Wire Line
-	2800 5050 2800 4950
-Wire Wire Line
-	2800 5300 2800 5250
 Wire Wire Line
 	3300 5800 3300 5700
 Wire Wire Line
@@ -2057,4 +1991,106 @@ F 3 "" H 3500 3100 50  0001 C CNN
 	1    3500 3100
 	1    0    0    -1  
 $EndComp
+$Comp
+L tobias_Library:S8050_SMD Q1
+U 1 1 60A77888
+P 1400 4050
+F 0 "Q1" H 1591 4141 50  0000 L CNN
+F 1 "S8050_SMD" H 1591 4050 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 1600 3975 50  0001 L CIN
+F 3 "http://www.unisonic.com.tw/datasheet/S8050.pdf" H 1400 4050 50  0001 L CNN
+F 4 "C2146" H 1591 3959 50  0000 L CNN "LCSC"
+	1    1400 4050
+	-1   0    0    -1  
+$EndComp
+$Comp
+L tobias_Library:S8050_SMD Q2
+U 1 1 60A79235
+P 1400 4700
+F 0 "Q2" H 1591 4609 50  0000 L CNN
+F 1 "S8050_SMD" H 1591 4700 50  0000 L CNN
+F 2 "Package_TO_SOT_SMD:SOT-23" H 1600 4625 50  0001 L CIN
+F 3 "http://www.unisonic.com.tw/datasheet/S8050.pdf" H 1400 4700 50  0001 L CNN
+F 4 "C2146" H 1591 4791 50  0000 L CNN "LCSC"
+	1    1400 4700
+	-1   0    0    1   
+$EndComp
+$Comp
+L Connector_Generic:Conn_01x03 J7
+U 1 1 60A83B49
+P 5700 3750
+F 0 "J7" H 5780 3792 50  0000 L CNN
+F 1 "Conn_01x03" H 5780 3701 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 5700 3750 50  0001 C CNN
+F 3 "~" H 5700 3750 50  0001 C CNN
+	1    5700 3750
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0110
+U 1 1 60A83B4F
+P 5100 3700
+F 0 "#PWR0110" H 5100 3550 50  0001 C CNN
+F 1 "+5V" H 5115 3873 50  0000 C CNN
+F 2 "" H 5100 3700 50  0001 C CNN
+F 3 "" H 5100 3700 50  0001 C CNN
+	1    5100 3700
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5500 3750 5100 3750
+Wire Wire Line
+	5100 3750 5100 3700
+$Comp
+L power:GND #PWR0119
+U 1 1 60A83B57
+P 5500 3850
+F 0 "#PWR0119" H 5500 3600 50  0001 C CNN
+F 1 "GND" H 5505 3677 50  0000 C CNN
+F 2 "" H 5500 3850 50  0001 C CNN
+F 3 "" H 5500 3850 50  0001 C CNN
+	1    5500 3850
+	1    0    0    -1  
+$EndComp
+Text GLabel 5500 3650 0    50   Input ~ 0
+IO4
+$Comp
+L Connector_Generic:Conn_01x03 J8
+U 1 1 60A888B2
+P 5700 4300
+F 0 "J8" H 5780 4342 50  0000 L CNN
+F 1 "Conn_01x03" H 5780 4251 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical" H 5700 4300 50  0001 C CNN
+F 3 "~" H 5700 4300 50  0001 C CNN
+	1    5700 4300
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0131
+U 1 1 60A888B8
+P 5100 4250
+F 0 "#PWR0131" H 5100 4100 50  0001 C CNN
+F 1 "+5V" H 5115 4423 50  0000 C CNN
+F 2 "" H 5100 4250 50  0001 C CNN
+F 3 "" H 5100 4250 50  0001 C CNN
+	1    5100 4250
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5500 4300 5100 4300
+Wire Wire Line
+	5100 4300 5100 4250
+$Comp
+L power:GND #PWR0132
+U 1 1 60A888C0
+P 5500 4400
+F 0 "#PWR0132" H 5500 4150 50  0001 C CNN
+F 1 "GND" H 5505 4227 50  0000 C CNN
+F 2 "" H 5500 4400 50  0001 C CNN
+F 3 "" H 5500 4400 50  0001 C CNN
+	1    5500 4400
+	1    0    0    -1  
+$EndComp
+Text GLabel 5500 4200 0    50   Input ~ 0
+IO5
 $EndSCHEMATC

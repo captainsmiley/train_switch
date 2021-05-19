@@ -27,7 +27,7 @@ F 5 "C82891" H 2800 2400 50  0001 C CNN "LCSC"
 	1    0    0    -1  
 $EndComp
 $Comp
-L SamacSys_Parts:TPS54331DR IC1
+L esp12Board-rescue:TPS54331DR-SamacSys_Parts IC1
 U 1 1 5FE6A6A2
 P 6700 2450
 F 0 "IC1" H 7300 2715 50  0000 C CNN
