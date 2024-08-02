@@ -1,5 +1,6 @@
 (sym_lib_table
-  (lib (name ESP8266-12E_ESP-12E)(type Legacy)(uri ${KIPRJMOD}/lib/ESP8266-12E_ESP-12E/ESP8266-12E_ESP-12E.lib)(options "")(descr ""))
-  (lib (name JLCPCB_R)(type Legacy)(uri ${KIPRJMOD}/lib/JLCPCB_parts/JLCPCB_R.lib)(options "")(descr ""))
-  (lib (name esp12Board-rescue)(type Legacy)(uri ${KIPRJMOD}/esp12Board-rescue.lib)(options "")(descr ""))
+  (version 7)
+  (lib (name "ESP8266-12E_ESP-12E")(type "Legacy")(uri "${KIPRJMOD}/lib/ESP8266-12E_ESP-12E/ESP8266-12E_ESP-12E.lib")(options "")(descr ""))
+  (lib (name "JLCPCB_R")(type "Legacy")(uri "${KIPRJMOD}/lib/JLCPCB_parts/JLCPCB_R.lib")(options "")(descr ""))
+  (lib (name "esp12Board-rescue")(type "KiCad")(uri "${KIPRJMOD}/esp12Board-rescue.kicad_sym")(options "")(descr ""))
 )
