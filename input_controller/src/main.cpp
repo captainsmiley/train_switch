@@ -13,7 +13,7 @@ const int read_v8_pin = 5; // nr 9;
 const int read_v9_pin = 14; // nr 4;
 const int read_v10_pin = 6; // nr 2;
 const int timeout_send_msg = 5000;
-const int min_time_send_msg = 50;
+const int min_time_send_msg = 1000;
 // variable to save v states
 uint32_t v = 0;
 uint32_t v_old = 0;
